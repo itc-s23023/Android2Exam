@@ -1,9 +1,6 @@
 package jp.ac.it_college.std.s23023.android.pokequiz.ui.generation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -28,17 +25,12 @@ fun GenerationScreen(
 ) {
     val uiState: GenerationUiState by viewModel.uiState.collectAsState()
     val generations: List<GenerationEntity> by uiState.generations.collectAsState(initial = emptyList())
+
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize().padding(16.dp)
     ) {
-        Text(text = "世代選択")
-        Button(
-            onClick = {
-                onGenerationSelected(1)
-            }
-        ) {
-            Text(text = "とりあえず第1世代でテスト")
-        }
+        Text(text = "世代選択", modifier = Modifier.padding(bottom = 16.dp))
+
         if (uiState.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier
@@ -46,12 +38,29 @@ fun GenerationScreen(
                     .padding(16.dp)
             )
         } else {
+            // LazyColumnで各世代ボタンを動的に作成
             LazyColumn {
-                items(generations) { item ->
-                    Text(text = "${item.name} ${item.region}")
+                items(generations) { generation ->
+                    Button(
+                        onClick = { onGenerationSelected(generation.id) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        Text(text = "${generation.name} (${generation.region})")
+                    }
                 }
+
+                // 全世代から出題ボタン
                 item {
-                    Text(text = "全世代から出題")
+                    Button(
+                        onClick = { onGenerationSelected(0) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        Text(text = "全世代から出題")
+                    }
                 }
             }
         }
