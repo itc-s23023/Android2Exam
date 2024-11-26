@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,9 +27,14 @@ fun HomeScreen(
     ) {
         Text(
             text = "ポケモンクイズ",
-            fontSize = 32.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            fontSize = 48.sp, // 最大サイズの初期値
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
