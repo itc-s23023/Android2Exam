@@ -3,7 +3,7 @@ package jp.ac.it_college.std.s23023.android.pokequiz.data.repository.impl
 import jp.ac.it_college.std.s23023.android.pokequiz.data.dao.PokemonIntroducedGenerationDao
 import jp.ac.it_college.std.s23023.android.pokequiz.data.entity.GenerationWithPokemon
 import jp.ac.it_college.std.s23023.android.pokequiz.data.entity.PokemonIntroducedGenerationCrossRef
-import jp.ac.it_college.std.s23000.android.pokequiz.data.repository.PokemonIntroducedGenerationRepository
+import jp.ac.it_college.std.s23023.android.pokequiz.data.repository.PokemonIntroducedGenerationRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

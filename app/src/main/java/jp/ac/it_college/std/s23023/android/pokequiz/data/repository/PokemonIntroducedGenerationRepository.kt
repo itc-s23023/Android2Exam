@@ -1,4 +1,4 @@
-package jp.ac.it_college.std.s23000.android.pokequiz.data.repository
+package jp.ac.it_college.std.s23023.android.pokequiz.data.repository
 
 import jp.ac.it_college.std.s23023.android.pokequiz.data.entity.GenerationWithPokemon
 import kotlinx.coroutines.flow.Flow

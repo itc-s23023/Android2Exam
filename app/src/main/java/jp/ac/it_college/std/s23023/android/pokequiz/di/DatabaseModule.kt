@@ -10,7 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import jp.ac.it_college.std.s23023.android.pokequiz.data.PokeQuizDatabase
 import jp.ac.it_college.std.s23023.android.pokequiz.data.repository.GenerationsRepository
-import jp.ac.it_college.std.s23000.android.pokequiz.data.repository.PokemonIntroducedGenerationRepository
+import jp.ac.it_college.std.s23023.android.pokequiz.data.repository.PokemonIntroducedGenerationRepository
 import jp.ac.it_college.std.s23023.android.pokequiz.data.repository.PokemonRepository
 import jp.ac.it_college.std.s23023.android.pokequiz.data.repository.impl.GenerationsRepositoryImpl
 import jp.ac.it_college.std.s23023.android.pokequiz.data.repository.impl.PokemonIntroducedGenerationRepositoryImpl
