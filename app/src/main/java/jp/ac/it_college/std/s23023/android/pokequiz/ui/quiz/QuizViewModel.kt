@@ -97,21 +97,24 @@ class QuizViewModel @Inject constructor(
     private suspend fun retrieveAndCacheGenerations(generation: Int) {
         try {
             if (generation == 0) {
-                Log.d("QuizViewModel", "Fetching all generations from API...")
-                service.getGenerations().results.forEach { result ->
-                    Log.d("QuizViewModel", "Fetching details for generation: ${result.name}")
+                Log.d("QuizViewModel", "Fetching missing generations from API...")
+                // 存在しない世代のIDを取得
+                val missingGenerationIds = repository.getMissingGenerationIds(maxGenerationId = 9)
+
+                for (genId in missingGenerationIds) {
+                    Log.d("QuizViewModel", "Fetching details for generation ID: $genId")
                     try {
-                        val gen = service.getGenerationByName(result.name)
+                        val gen = service.getGenerationById(genId)
 
                         gen.pokemonSpecies.forEach { species ->
                             Log.d("QuizViewModel", "Fetching details for pokemon: ${species.name}")
                             try {
                                 val pokemon = service.getPokemonByName(species.name)
                                 repository.upsertEntry(
-                                    generationId = gen.id,
+                                    generationId = genId,
                                     pokemonId = pokemon.id
                                 )
-                                Log.d("QuizViewModel", "Pokemon ${pokemon.name} (ID: ${pokemon.id}) added to generation ${gen.id}")
+                                Log.d("QuizViewModel", "Pokemon ${pokemon.name} (ID: ${pokemon.id}) added to generation $genId")
                             } catch (e: Exception) {
                                 if (e is HttpException && e.code() == 404) {
                                     Log.w("QuizViewModel", "Pokemon ${species.name} not found, skipping.")
@@ -122,13 +125,13 @@ class QuizViewModel @Inject constructor(
                         }
                     } catch (e: Exception) {
                         if (e is HttpException && e.code() == 404) {
-                            Log.w("QuizViewModel", "Generation ${result.name} not found, skipping.")
+                            Log.w("QuizViewModel", "Generation ID $genId not found, skipping.")
                         } else {
                             throw e // 他のエラーは再スロー
                         }
                     }
                 }
-                Log.d("QuizViewModel", "All generations fetched and cached.")
+                Log.d("QuizViewModel", "Missing generations fetched and cached.")
             } else {
                 Log.d("QuizViewModel", "Fetching generation $generation from API...")
                 val gen = service.getGenerationById(generation)
@@ -156,5 +159,6 @@ class QuizViewModel @Inject constructor(
             handleError("Failed to fetch or cache generation data: ${e.message}")
         }
     }
+
 
 }
