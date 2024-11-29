@@ -19,4 +19,19 @@ interface PokemonIntroducedGenerationDao {
 
     @Query("SELECT COUNT(*) FROM pokemon_introduced_generation_cross_ref WHERE generation_id = :id")
     suspend fun getEntryCount(id: Int): Int
+
+    @Query("SELECT DISTINCT generation_id FROM pokemon_introduced_generation_cross_ref")
+    suspend fun getAllExistingGenerationIds(): List<Int>
+
+    suspend fun getMissingGenerationIds(maxGenerationId: Int): List<Int> {
+        // 1 から maxGenerationId までのリストを生成
+        val fullRange = (1..maxGenerationId).toList()
+
+        // データベース内に存在する generation_id を取得
+        val existingIds = getAllExistingGenerationIds()
+
+        // 存在しない generation_id を計算して返す
+        return fullRange.minus(existingIds)
+    }
+
 }

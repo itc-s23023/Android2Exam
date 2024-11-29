@@ -66,7 +66,9 @@ class QuizViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             try {
+                val missingGenerationIds = repository.getMissingGenerationIds(maxGenerationId = 9)
                 val entryCount = repository.getEntryCount(generation)
+                Log.d("MissingGenerationIds", "Missing IDs: $missingGenerationIds")
                 Log.d("QuizViewModel", "Entry count for initial generation $generation: $entryCount")
 
                 if (entryCount == 0) {
