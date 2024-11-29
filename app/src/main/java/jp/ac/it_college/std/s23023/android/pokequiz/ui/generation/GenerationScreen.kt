@@ -46,6 +46,7 @@ fun GenerationScreen(
                     Button(
                         onClick  = {
                             quizviewModel.loadQuizData(generation.id)
+                            onGenerationSelected(generation.id)
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -60,6 +61,7 @@ fun GenerationScreen(
                     Button(
                         onClick = {
                             quizviewModel.loadQuizData(0)
+                            onGenerationSelected(0)
                         },
                         modifier = Modifier
                             .fillMaxWidth()
