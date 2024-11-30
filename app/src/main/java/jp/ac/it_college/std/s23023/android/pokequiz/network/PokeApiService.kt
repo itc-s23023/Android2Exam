@@ -2,6 +2,7 @@ package jp.ac.it_college.std.s23023.android.pokequiz.network
 
 import jp.ac.it_college.std.s23023.android.pokequiz.network.model.Generation
 import jp.ac.it_college.std.s23023.android.pokequiz.network.model.Named
+import jp.ac.it_college.std.s23023.android.pokequiz.network.model.Pokemon
 import jp.ac.it_college.std.s23023.android.pokequiz.network.model.Region
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -40,4 +41,7 @@ interface PokeApiService {
 
     @GET("region/{name}")
     suspend fun getRegionByName(@Path("name") name: String): Region
+
+    @GET("pokemon/{name}")
+    suspend fun getPokemonByName(@Path("name") name: String): Pokemon
 }

@@ -16,12 +16,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import jp.ac.it_college.std.s23023.android.pokequiz.data.entity.GenerationEntity
 import jp.ac.it_college.std.s23023.android.pokequiz.mock.GenerationsRepositoryMock
 import jp.ac.it_college.std.s23023.android.pokequiz.mock.PokeApiServiceMock
+import jp.ac.it_college.std.s23023.android.pokequiz.ui.quiz.QuizViewModel
 
 @Composable
 fun GenerationScreen(
     modifier: Modifier = Modifier,
     onGenerationSelected: (Int) -> Unit = {},
-    viewModel: GenerationViewModel = hiltViewModel()
+    viewModel: GenerationViewModel = hiltViewModel(),
+    quizviewModel: QuizViewModel = hiltViewModel()
 ) {
     val uiState: GenerationUiState by viewModel.uiState.collectAsState()
     val generations: List<GenerationEntity> by uiState.generations.collectAsState(initial = emptyList())
@@ -42,7 +44,10 @@ fun GenerationScreen(
             LazyColumn {
                 items(generations) { generation ->
                     Button(
-                        onClick = { onGenerationSelected(generation.id) },
+                        onClick  = {
+                            quizviewModel.loadQuizData(generation.id)
+                            onGenerationSelected(generation.id)
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 8.dp)
@@ -54,7 +59,10 @@ fun GenerationScreen(
                 // 全世代から出題ボタン
                 item {
                     Button(
-                        onClick = { onGenerationSelected(0) },
+                        onClick = {
+                            quizviewModel.loadQuizData(0)
+                            onGenerationSelected(0)
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 8.dp)
