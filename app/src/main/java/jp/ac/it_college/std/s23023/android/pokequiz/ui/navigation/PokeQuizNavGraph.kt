@@ -64,10 +64,10 @@ fun PokeQuizNavGraph(
             )
         ) {
             QuizScreen(
-                toResult = { gen, count ->
+                toResult = { gen, score ->
                     navActions.navigateToResult(
                         generationId = gen,
-                        count = count
+                        score = score
                     )
                 }
             )
@@ -85,8 +85,12 @@ fun PokeQuizNavGraph(
                 }
             )
         ) {
+            val correctAnswerCount = it.arguments?.getInt(CORRECT_ANSWER_COUNT_ARG) ?: 0
+
             ResultScreen(
-                onRetryClick = {
+                score = correctAnswerCount,  // ここでスコアを渡す
+
+                onGenerationSelected = {
                     navActions.navigateToQuiz(1)
                 },
                 onGenerationClick = {
