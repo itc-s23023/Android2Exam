@@ -74,25 +74,25 @@ fun PokeQuizNavGraph(
         }
 
         // リザルト画面
-        composable(
-            route = PokeQuizDestinations.RESULT_ROUTE,
-            arguments = listOf(
-                navArgument(GENERATION_ID_ARG) {
-                    type = NavType.IntType
-                },
-                navArgument(CORRECT_ANSWER_COUNT_ARG) {
-                    type = NavType.IntType
-                }
-            )
-        ) {
-            ResultScreen(
-                onRetryClick = {
-                    navActions.navigateToQuiz(1)
-                },
-                onGenerationClick = {
-                    navActions.navigateToGenerationSelect()
-                }
-            )
-        }
+//        composable(
+//            route = PokeQuizDestinations.RESULT_ROUTE,
+//            arguments = listOf(
+//                navArgument(GENERATION_ID_ARG) {
+//                    type = NavType.IntType
+//                },
+//                navArgument(CORRECT_ANSWER_COUNT_ARG) {
+//                    type = NavType.IntType
+//                }
+//            )
+//        ) {
+//            ResultScreen(
+//                onGenerationSelected = {
+//                    navActions.navigateToQuiz(1)
+//                },
+//                onGenerationClick = {
+//                    navActions.navigateToGenerationSelect()
+//                }
+//            )
+//        }
     }
 }
