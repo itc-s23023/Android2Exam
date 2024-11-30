@@ -52,7 +52,7 @@ class PokeQuizNavigationActions(private val navController: NavHostController) {
         navController.navigate("$QUIZ_SCREEN/$generationId")
     }
 
-    fun navigateToResult(generationId: Int, count: Int) {
-        navController.navigate("$RESULT_SCREEN/$generationId/$count")
+    fun navigateToResult(generationId: Int, score: Int) {
+        navController.navigate("$RESULT_SCREEN/$generationId/$score")
     }
 }

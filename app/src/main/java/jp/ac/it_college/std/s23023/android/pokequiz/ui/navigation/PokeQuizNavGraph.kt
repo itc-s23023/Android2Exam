@@ -64,35 +64,39 @@ fun PokeQuizNavGraph(
             )
         ) {
             QuizScreen(
-                toResult = { gen, count ->
+                toResult = { gen, score ->
                     navActions.navigateToResult(
                         generationId = gen,
-                        count = count
+                        score = score
                     )
                 }
             )
         }
 
         // リザルト画面
-//        composable(
-//            route = PokeQuizDestinations.RESULT_ROUTE,
-//            arguments = listOf(
-//                navArgument(GENERATION_ID_ARG) {
-//                    type = NavType.IntType
-//                },
-//                navArgument(CORRECT_ANSWER_COUNT_ARG) {
-//                    type = NavType.IntType
-//                }
-//            )
-//        ) {
-//            ResultScreen(
-//                onGenerationSelected = {
-//                    navActions.navigateToQuiz(1)
-//                },
-//                onGenerationClick = {
-//                    navActions.navigateToGenerationSelect()
-//                }
-//            )
-//        }
+        composable(
+            route = PokeQuizDestinations.RESULT_ROUTE,
+            arguments = listOf(
+                navArgument(GENERATION_ID_ARG) {
+                    type = NavType.IntType
+                },
+                navArgument(CORRECT_ANSWER_COUNT_ARG) {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            val correctAnswerCount = it.arguments?.getInt(CORRECT_ANSWER_COUNT_ARG) ?: 0
+
+            ResultScreen(
+                score = correctAnswerCount,  // ここでスコアを渡す
+
+                onGenerationSelected = {
+                    navActions.navigateToQuiz(1)
+                },
+                onGenerationClick = {
+                    navActions.navigateToGenerationSelect()
+                }
+            )
+        }
     }
 }
