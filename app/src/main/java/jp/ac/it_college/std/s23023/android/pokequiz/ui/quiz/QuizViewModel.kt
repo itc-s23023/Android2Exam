@@ -66,8 +66,10 @@ class QuizViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             try {
+//                val RamPokemon = getRandomPokemonName()
                 val missingGenerationIds = repository.getMissingGenerationIds(maxGenerationId = 9)
                 val entryCount = repository.getEntryCount(generation)
+//                Log.d("RandomPokemon", "RandomPokemon: $RamPokemon")
                 Log.d("MissingGenerationIds", "Missing IDs: $missingGenerationIds")
                 Log.d("QuizViewModel", "Entry count for initial generation $generation: $entryCount")
 
@@ -98,7 +100,6 @@ class QuizViewModel @Inject constructor(
         try {
             if (generation == 0) {
                 Log.d("QuizViewModel", "Fetching missing generations from API...")
-                // 存在しない世代のIDを取得
                 val missingGenerationIds = repository.getMissingGenerationIds(maxGenerationId = 9)
 
                 for (genId in missingGenerationIds) {
@@ -119,7 +120,7 @@ class QuizViewModel @Inject constructor(
                                 if (e is HttpException && e.code() == 404) {
                                     Log.w("QuizViewModel", "Pokemon ${species.name} not found, skipping.")
                                 } else {
-                                    throw e // 他のエラーは再スロー
+                                    throw e
                                 }
                             }
                         }
@@ -127,7 +128,7 @@ class QuizViewModel @Inject constructor(
                         if (e is HttpException && e.code() == 404) {
                             Log.w("QuizViewModel", "Generation ID $genId not found, skipping.")
                         } else {
-                            throw e // 他のエラーは再スロー
+                            throw e
                         }
                     }
                 }
@@ -149,7 +150,7 @@ class QuizViewModel @Inject constructor(
                         if (e is HttpException && e.code() == 404) {
                             Log.w("QuizViewModel", "Pokemon ${species.name} not found, skipping.")
                         } else {
-                            throw e // 他のエラーは再スロー
+                            throw e
                         }
                     }
                 }
@@ -160,5 +161,14 @@ class QuizViewModel @Inject constructor(
         }
     }
 
-
+    suspend fun getRandomPokemonName(): String? {
+        return try {
+            val genData = service.getGenerationById(generationId)
+            val randomPokemon = genData.pokemonSpecies.random()
+            randomPokemon.name
+        } catch (e: Exception) {
+            Log.e("QuizViewModel", "Error fetching random Pokemon: ${e.message}")
+            null
+        }
+    }
 }

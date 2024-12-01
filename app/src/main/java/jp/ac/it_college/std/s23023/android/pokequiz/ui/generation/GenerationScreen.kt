@@ -23,7 +23,7 @@ fun GenerationScreen(
     modifier: Modifier = Modifier,
     onGenerationSelected: (Int) -> Unit = {},
     viewModel: GenerationViewModel = hiltViewModel(),
-    quizviewModel: QuizViewModel = hiltViewModel()
+    quizViewModel: QuizViewModel = hiltViewModel()
 ) {
     val uiState: GenerationUiState by viewModel.uiState.collectAsState()
     val generations: List<GenerationEntity> by uiState.generations.collectAsState(initial = emptyList())
@@ -45,7 +45,7 @@ fun GenerationScreen(
                 items(generations) { generation ->
                     Button(
                         onClick  = {
-                            quizviewModel.loadQuizData(generation.id)
+                            quizViewModel.loadQuizData(generation.id)
                             onGenerationSelected(generation.id)
                         },
                         modifier = Modifier
@@ -60,7 +60,7 @@ fun GenerationScreen(
                 item {
                     Button(
                         onClick = {
-                            quizviewModel.loadQuizData(0)
+                            quizViewModel.loadQuizData(0)
                             onGenerationSelected(0)
                         },
                         modifier = Modifier
